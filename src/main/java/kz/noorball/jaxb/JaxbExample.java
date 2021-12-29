@@ -2,6 +2,7 @@ package kz.noorball.jaxb;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.xml.bind.JAXBContext;
@@ -43,24 +44,25 @@ public class JaxbExample {
     @XmlType(name = "zoo")
     @XmlRootElement
     @XmlAccessorType(XmlAccessType.FIELD)
-    static
-    class Zoo {
+    public static class Zoo {
         @XmlElementWrapper(name="wild-animals", nillable = true)
         @XmlElement(name = "tiger")
-        public List animals = new ArrayList<>();
+        public List<Animal> animals = new ArrayList<>();
     }
 
-    @Data
+    @Data @EqualsAndHashCode(callSuper=true)
     @NoArgsConstructor @AllArgsConstructor
     @XmlRootElement
     @XmlAccessorType(XmlAccessType.FIELD)
-    static
-    class Cat {
+    static class Cat extends Animal {
         @XmlElement(name = "catname")
         String name;
         @XmlAttribute(name = "age")
         Integer age;
         @XmlAttribute(name = "weight")
         Integer weight;
+    }
+
+    abstract static class Animal {
     }
 }
